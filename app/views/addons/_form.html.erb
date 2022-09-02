@@ -1,0 +1,17 @@
+<%= form_with(model: addon, local: true) do |form| %>
+  <% if addon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(addon.errors.count, "error") %> prohibited this addon from being saved:</h2>
+
+      <ul>
+        <% addon.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
