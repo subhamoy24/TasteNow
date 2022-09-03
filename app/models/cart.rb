@@ -4,10 +4,10 @@ class Cart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
 
   def gross_amount
-    cart_items.map{ |cart_item| cart_item.total_price }.sum
+    (cart_items.map{ |cart_item| cart_item.total_price }.sum).round(2)
   end
 
   def as_json
-    super(only: [:id], include: { cart_items: { only: [:id, :quantity], include: { variation: { only: [:id, :price, :name, :description] }, food: { only: [:id, :price, :name, :description] } , addons: { only: [:id, :price, :name, :description] }}, methods: [:total_price, :base_price]}})
+    super(only: [:id], include: { cart_items: { only: [:id, :quantity], include: { variation: { only: [:id, :price, :name, :description] }, food: { only: [:id, :price, :name, :description] } , addons: { only: [:id, :price, :name, :description] }}, methods: [:total_price, :base_price]}}, methods: [:gross_amount])
   end
 end

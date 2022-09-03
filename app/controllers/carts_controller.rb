@@ -11,7 +11,7 @@ class CartsController < ApplicationController
 
   # POST /carts or /carts.json
   def create
-    @cart = Cart.new(cart_params)
+    @cart = Cart.new(user_id: params[:user_id])
 
     if @cart.save
       render json: { msg: ["Cart was successfully created." ] }, status: 200
@@ -23,7 +23,7 @@ class CartsController < ApplicationController
   # DELETE /carts/1 or /carts/1.json
   def destroy
     if @cart.destroy
-      render json: { msg: ["Cart was successfully created." ] }, status: 200
+      render json: { cart: @cart, msg: ["Cart was successfully created." ] }, status: 200
     else
       render json: { msg: @cart.errors }, status: 401
     end
@@ -32,11 +32,7 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      @cart = Cart.find_by(id: params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    def cart_params
-      params.fetch(:cart, {})
-    end
 end

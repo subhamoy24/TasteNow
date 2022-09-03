@@ -29,6 +29,6 @@ class CartItem < ApplicationRecord
   end
 
   def as_json
-    super(include: [:cart, :variation, :addons], methods: [:base_price, :total_price])
+    super(include: [:cart, { variation: { include: [:food] } }, :addons], methods: [:base_price, :total_price])
   end
 end
